@@ -1,7 +1,17 @@
 <script>
+import SectionHeader from './components/SectionHeader.vue';
+
+export default {
+    name: 'App',
+    components: {
+        SectionHeader
+    }
+}
 
 </script>
 
-<template></template>
+<template>
+    <SectionHeader></SectionHeader>
+</template>
 
 <style scoped></style>
