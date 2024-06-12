@@ -145,17 +145,27 @@ export default {
                                 <img height="300" class="card-img-top rounded-3"
                                     :src="foto.image_path.startsWith('https://') ? foto.image_path : this.base_api_url + 'storage/' + foto.image_path"
                                     alt="Title" />
-                                <!-- <div class="card-body">
-                                    <h6 class="card-title text-center ">{{ foto.title }}</h6>
-                                    <p>Pubblicata il {{ foto.created_at.getDate() }}</p> 
-                                </div> -->
+
                                 <div class="card-info position-absolute start-0 top-0 z-1 w-100 h-100 p-3 rounded-3">
-                                    <i class="fa fa-star fa-xl" aria-hidden="true"
-                                        :class="foto.in_evidenza == 1 ? 'text-warning' : 'text-dark'"></i>
+                                    <div class="position-absolute start-0 top-0 p-3">
+
+                                        <div
+                                            class="bg-light p-2 d-flex flex-column align-items-center justify-content-center rounded-3">
+                                            <i class="fa fa-star fa-xl" aria-hidden="true"
+                                                :class="foto.in_evidenza == 1 ? 'text-warning' : 'text-dark'"></i>
+                                        </div>
+
+
+                                    </div>
+
                                     <div class="position-absolute end-0 top-0 p-3">
 
-                                        <i class="fa fa-folder fa-xl me-2" aria-hidden="true"></i>
-                                        <span>{{ foto.category ? foto.category.name : 'N/a' }}</span>
+                                        <div
+                                            class="bg-light p-2 d-flex flex-column align-items-center justify-content-center rounded-3">
+                                            <div>{{ foto.category ? foto.category.name : 'N/a' }}</div>
+                                        </div>
+
+
                                     </div>
                                     <div class="position-absolute start-0 bottom-0 ps-3">
                                         <span class="fs-6 text-uppercase fw-bold">{{
