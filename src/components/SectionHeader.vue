@@ -21,6 +21,5 @@ export default {
 <style scoped>
 header {
     background-color: #d5bdaf;
-
 }
 </style>
