@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import moment from "moment";
 
 
 export default {
@@ -12,6 +13,7 @@ export default {
             fotos_in_evidenza: '',
             fotos: '',
             index: 0,
+            moment: moment
         }
     },
     methods: {
@@ -122,13 +124,25 @@ export default {
                     </div>
                     <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1">
                         <div class="col mb-3" v-for="foto in fotos">
-                            <div class="card text-dark"><!-- :class="index == key ? 'active' : ''" -->
+                            <div class="card text-dark border-0 position-relative rounded-3">
+                                <!-- :class="index == key ? 'active' : ''" -->
                                 <img height="300" class="card-img-top"
                                     :src="foto.image_path.startsWith('https://') ? foto.image_path : this.base_api_url + 'storage/' + foto.image_path"
                                     alt="Title" />
-                                <div class="card-body">
-                                    <h6 class="card-title text-center">{{ foto.title }}</h6>
-                                    <!--  <p>Pubblicata il {{ foto.created_at.getDate() }}</p> -->
+                                <!-- <div class="card-body">
+                                    <h6 class="card-title text-center ">{{ foto.title }}</h6>
+                                    <p>Pubblicata il {{ foto.created_at.getDate() }}</p> 
+                                </div> -->
+                                <div class="card-info position-absolute start-0 top-0 z-1 w-100 h-100 p-3 rounded-3">
+                                    <i class="fa fa-star fa-xl" aria-hidden="true"
+                                        :class="foto.in_evidenza == 1 ? 'text-warning' : 'text-dark'"></i>
+                                    <div class="position-absolute start-0 bottom-0 ps-3">
+                                        <span class="fs-6 text-uppercase fw-bold">{{
+                                            foto.title }}</span>
+                                        <p class="fs-6 fst-italic">Pubblicata il {{
+                                            moment(foto.created_at).format('DD-MM-YYYY') }}</p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -144,6 +158,17 @@ export default {
 <style scoped>
 .jumbotron {
     background-color: #f5ebe0;
+}
+
+.card-info {
+    background-color: rgba(0, 0, 0, 0.258);
+}
+
+.card:hover {
+
+    scale: 1.05;
+
+
 }
 
 /* .active {
