@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios';
 import { store } from '../store';
 import CardItem from './CardItem.vue';
 export default {
@@ -8,7 +9,28 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            searchInEvidenza: false,
+            searchCategory: false,
+            url_finale: ','
+
+        }
+    },
+    methods: {
+        search() {
+            let url = store.base_api_url + store.fotos_endpoint
+            if (this.searchInEvidenza && this.searchCategory) {
+                url = url + '?' + 'in_evidenza=1' + '&category=' + this.searchCategory;
+                console.log(this.url_finale);
+            }
+            axios
+                .get(url)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
     }
 }
@@ -22,17 +44,37 @@ export default {
 
                 <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Filtra <i class="fa fa-filter"
-                        aria-hidden="true"></i></button>
+                        aria-hidden="true"></i>
+                </button>
 
                 <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
                     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Offcanvas with body scrolling
+                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Filtra le immagini
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <p>Try scrolling the rest of the page to see this option in action.</p>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="in_evidenza"
+                                name="in_evidenza" v-model="searchInEvidenza">
+                            <label class="form-check-label" for="in_evidenza">In Evidenza</label>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="" class="form-label">Category</label>
+                            <select class="form-select form-select-sm" aria-label="Small select example"
+                                v-model="searchCategory">
+                                <option selected disabled>Select one of this Category</option>
+
+                                <option v-for="category in store.allCategories" :value="category.id">{{ category.name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="button" @click="search()">Search</button>
                     </div>
                 </div>
             </div>
