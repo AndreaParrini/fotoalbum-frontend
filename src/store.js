@@ -6,12 +6,14 @@ export const store = reactive({
     // STATE
     base_api_url: 'http://127.0.0.1:8000/',
     fotos_endpoint: 'api/fotos',
+    categories_endpoint: 'api/categories',
     in_evidenza_query: 'evidenza=1',
     fotos: '',
     sliderInterval: '',
     fotos_in_evidenza: [],
     activeImage: 0,
     moment: moment,
+    allCategories: [],
 
 
 
@@ -42,6 +44,17 @@ export const store = reactive({
             .catch((error) => {
                 console.error(error);
             });
+    },
+    GetAllCategories() {
+        axios
+            .get(this.base_api_url + this.categories_endpoint)
+            .then((response) => {
+                console.log(response.data.results)
+                store.allCategories = response.data.results;
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }
 
 })

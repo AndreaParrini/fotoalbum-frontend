@@ -19,9 +19,8 @@ export default {
             store
         }
     },
-    methods: {
-
-
+    created() {
+        store.GetAllCategories();
     }
 }
 
