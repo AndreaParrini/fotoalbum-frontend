@@ -18,11 +18,15 @@ export default {
     },
     methods: {
         search() {
-            let url = store.base_api_url + store.fotos_endpoint
-            if (this.searchInEvidenza && this.searchCategory) {
-                url = url + '?' + 'in_evidenza=1' + '&category=' + this.searchCategory;
-                console.log(this.url_finale);
+            let url = store.base_api_url + store.fotos_endpoint + '?'
+            if (this.searchInEvidenza) {
+                url = url + 'in_evidenza=1';
+
             }
+            if (this.searchCategory) {
+                url = url + '&category=' + this.searchCategory;
+            }
+            console.log(url);
             axios
                 .get(url)
                 .then((response) => {
