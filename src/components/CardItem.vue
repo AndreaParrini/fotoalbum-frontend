@@ -3,7 +3,9 @@ import { store } from '../store';
 export default {
     name: 'CardItem',
     props: {
-        foto: Object
+        foto: Object,
+        type: String,
+        index: Number
     },
     data() {
         return {
@@ -14,14 +16,17 @@ export default {
 </script>
 <template>
     <div class="col mb-3">
-        <div class="card text-dark border-0 position-relative rounded-3">
+        <div class="card text-dark border-0 position-relative rounded-3"
+            :class="(store.activeImage == index && type == 'slider') ? 'active' : ''"
+            @click="if (type == 'slider') { activeImage = index };">
             <!-- :class="index == key ? 'active' : ''" -->
             <img height="300" class="card-img-top rounded-3"
                 :src="foto.image_path.startsWith('https://') ? foto.image_path : store.base_api_url + 'storage/' + foto.image_path"
                 alt="Title" />
 
-            <div class="card-info position-absolute start-0 top-0 z-1 w-100 h-100 p-3 rounded-3">
-                <div class="position-absolute start-0 top-0 p-3">
+            <div class="card-info position-absolute start-0 top-0 z-1 w-100 h-100 p-3 rounded-3"
+                :class="(store.activeImage == index && type == 'slider') ? 'd-block' : ''">
+                <div class=" position-absolute start-0 top-0 p-3">
 
                     <div class="bg-light p-2 d-flex flex-column align-items-center justify-content-center rounded-3">
                         <i class="fa fa-star fa-xl" aria-hidden="true"
@@ -45,9 +50,9 @@ export default {
                     </div>
                     <div>
                         <span class="fs-6 text-uppercase fw-bold">{{
-                            foto.title }}</span>
+                                foto.title }}</span>
                         <p class="fs-6 fst-italic m-0">Pubblicata il {{
-                            store.moment(foto.created_at).format('DD-MM-YYYY') }}</p>
+                                store.moment(foto.created_at).format('DD-MM-YYYY') }}</p>
                     </div>
                 </div>
 
@@ -63,15 +68,14 @@ export default {
     display: none;
 }
 
-.card:hover {
-
+.section-fotos .card:hover {
     scale: 1.05;
+}
 
+.card:hover {
     .card-info {
         display: block;
     }
-
-
 }
 
 .active {
