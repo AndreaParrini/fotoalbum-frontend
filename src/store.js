@@ -10,6 +10,7 @@ export const store = reactive({
     fotos: '',
     sliderInterval: '',
     fotos_in_evidenza: [],
+    activeImage: 0,
     moment: moment,
 
 
@@ -28,7 +29,7 @@ export const store = reactive({
                     console.error(error);
                 })
 
-            clearInterval(this.sliderInterval);
+            clearInterval(store.sliderInterval);
         }
     },
     GetFotoHomePage() {
