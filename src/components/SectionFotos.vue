@@ -38,7 +38,7 @@ export default {
             </div>
         </div>
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1">
-            <CardItem v-for="foto in store.fotos" :foto="foto" :key="foto.id"></CardItem>
+            <CardItem v-for="foto, index in store.fotos" :type="''" :index="index" :foto="foto" :key="foto.id"></CardItem>
         </div>
     </div>
 </template>
