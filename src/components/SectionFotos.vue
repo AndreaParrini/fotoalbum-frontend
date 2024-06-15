@@ -2,66 +2,23 @@
 import axios from 'axios';
 import { store } from '../store';
 import CardItem from './CardItem.vue';
+import SectionFilter from './SectionFilter.vue';
+
 export default {
     name: 'SectionFotos',
     components: {
-        CardItem
+        CardItem,
+        SectionFilter
     },
     data() {
         return {
             store,
-            searchInEvidenza: false,
-            searchCategory: false,
-            searchTitle: '',
-            searchUrl: '',
         }
     },
     methods: {
-        controlInput(url) {
 
-            if (this.searchInEvidenza) {
-                url = url + '&in_evidenza=1';
-
-            };
-
-            if (this.searchCategory) {
-                url = url + '&category=' + this.searchCategory;
-            };
-
-            if (this.searchTitle) {
-                url = url + '&title=' + this.searchTitle;
-
-            };
-
-            return url;
-        },
-        search() {
-
-            let url = store.base_api_url + store.fotos_endpoint + '?';
-            url = this.controlInput(url);
-            //console.log(url);
-            if (url != this.searchUrl) {
-
-                //console.log(url);
-                store.callApiFotos(url);
-
-                this.searchUrl = url;
-            }
-
-        },
-        reset() {
-            this.searchCategory = false;
-            this.searchInEvidenza = false;
-            this.searchTitle = '';
-        },
-        annullaFiltri() {
-            this.searchUrl = '';
-            this.reset();
-            const url = store.base_api_url + store.fotos_endpoint;
-            store.callApiFotos(url);
-        },
         goTo(url) {
-            url = this.controlInput(url);
+            url = store.controlInput(url);
             console.log(url);
             store.callApiFotos(url);
         }
@@ -74,66 +31,7 @@ export default {
         <div class="d-flex justify-content-between px-5">
 
             <h2 class="text-center fst-italic mb-4">Tutte le foto caricate</h2>
-            <div>
-
-                <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Filtra <i class="fa fa-filter"
-                        aria-hidden="true"></i>
-                </button>
-
-                <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-                    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Filtra le immagini
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" role="switch" id="in_evidenza"
-                                name="in_evidenza" v-model="searchInEvidenza">
-                            <label class="form-check-label" for="in_evidenza">In Evidenza</label>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Category</label>
-                            <select class="form-select form-select-sm" aria-label="Small select example"
-                                v-model="searchCategory">
-                                <option selected disabled>Select one of this Category</option>
-
-                                <option v-for="category in store.allCategories" :value="category.id">{{ category.name }}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" name="title" id="title"
-                                aria-describedby="helpSearchTitle" placeholder="Insert title of image"
-                                v-model="searchTitle" />
-                        </div>
-
-
-                        <button class="btn btn-outline-success me-3" type="button" @click="search()"
-                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">
-                            <span v-if="!store.loader">Search</span>
-                            <span class="spinner-grow spinner-grow-sm" aria-hidden="true" v-if="store.loader"></span>
-                            <span role="status" v-if="store.loader">Loading...</span>
-                        </button>
-                        <button class="btn btn-outline-danger me-3" type="button" @click="reset()" v-if="!store.loader"
-                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">
-                            <span>Reset</span>
-                        </button>
-                        <button class="btn btn-outline-dark" type="button" @click="annullaFiltri()" v-if="!store.loader"
-                            :class="(searchUrl == '') ? 'disabled' : ''">
-                            <span>Annulla Filtro</span>
-                        </button>
-
-                    </div>
-                </div>
-            </div>
+            <SectionFilter></SectionFilter>
         </div>
         <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" v-if="store.fotos.data.length > 0">
             <CardItem v-for="foto, index in store.fotos.data" :type="''" :index="index" :foto="foto" :key="foto.id">
