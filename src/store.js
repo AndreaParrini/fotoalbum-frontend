@@ -15,6 +15,10 @@ export const store = reactive({
     moment: moment,
     allCategories: [],
     loader: false,
+    searchInEvidenza: false,
+    searchCategory: false,
+    searchTitle: '',
+    searchUrl: '',
 
 
 
@@ -68,6 +72,24 @@ export const store = reactive({
             .catch((error) => {
                 console.error(error)
             })
-    }
+    },
+    controlInput(url) {
+
+        if (this.searchInEvidenza) {
+            url = url + '&in_evidenza=1';
+
+        };
+
+        if (this.searchCategory) {
+            url = url + '&category=' + this.searchCategory;
+        };
+
+        if (this.searchTitle) {
+            url = url + '&title=' + this.searchTitle;
+
+        };
+
+        return url;
+    },
 
 })
