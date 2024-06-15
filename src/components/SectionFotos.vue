@@ -12,31 +12,47 @@ export default {
             store,
             searchInEvidenza: false,
             searchCategory: false,
-            url_finale: ','
-
+            searchTitle: '',
+            searchUrl: ''
         }
     },
     methods: {
         search() {
-            let url = store.base_api_url + store.fotos_endpoint + '?'
+            let url = store.base_api_url + store.fotos_endpoint + '?';
+
             if (this.searchInEvidenza) {
                 url = url + 'in_evidenza=1';
 
-            }
+            };
+
             if (this.searchCategory) {
                 url = url + '&category=' + this.searchCategory;
+            };
+
+            if (this.searchTitle) {
+                url = url + '&title=' + this.searchTitle;
+
+            };
+
+            if (url != this.searchUrl) {
+                //console.log(url);
+                store.CallApiFotos(url);
+                this.searchUrl = url;
             }
-            console.log(url);
-            axios
-                .get(url)
-                .then((response) => {
-                    console.log(response.data.results);
-                    store.fotos = response.data.results;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+
+        },
+        reset() {
+            this.searchCategory = false;
+            this.searchInEvidenza = false;
+            this.searchTitle = '';
+        },
+        annullaFiltri() {
+            this.searchUrl = '';
+            this.reset();
+            const url = store.base_api_url + store.fotos_endpoint;
+            store.CallApiFotos(url);
         }
+
     }
 }
 </script>
@@ -79,13 +95,36 @@ export default {
                             </select>
                         </div>
 
-                        <button type="button" @click="search()">Search</button>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                aria-describedby="helpSearchTitle" placeholder="Insert title of image"
+                                v-model="searchTitle" />
+                        </div>
+
+
+                        <button class="btn btn-outline-success me-3" type="button" @click="search()"
+                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">Search</button>
+                        <button class="btn btn-outline-danger me-3" type="button" @click="reset()"
+                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">Reset</button>
+                        <button class="btn btn-outline-dark" type="button" @click="annullaFiltri()"
+                            :class="(searchUrl == '') ? 'disabled' : ''">Annulla Filtro</button>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1">
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" v-if="store.fotos.length > 0">
             <CardItem v-for="foto, index in store.fotos" :type="''" :index="index" :foto="foto" :key="foto.id"></CardItem>
+        </div>
+        <div v-else class="py-5">
+            <div class="py-5 fs-5 fw-bolder text-center">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                Non ci sono foto per le ricerca effettuata.<br />
+                Riprova modificando i dati inseriti.
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+
+            </div>
         </div>
     </div>
 </template>
