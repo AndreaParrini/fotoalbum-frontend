@@ -18,18 +18,23 @@ export const store = reactive({
 
 
     // ACTIONS
+    CallApiFotos(url) {
+        axios
+            .get(url)
+            .then((response) => {
+                //console.log(response.data.results);
+                this.fotos = response.data.results;
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+
+    },
     GetAllFotos() {
         if (!this.fotos) {
+            const url = this.base_api_url + this.fotos_endpoint;
 
-            axios
-                .get(this.base_api_url + this.fotos_endpoint)
-                .then((response) => {
-                    console.log(response.data.results);
-                    this.fotos = response.data.results;
-                })
-                .catch((error) => {
-                    console.error(error);
-                })
+            this.CallApiFotos(url);
 
             clearInterval(store.sliderInterval);
         }
