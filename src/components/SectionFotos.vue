@@ -17,12 +17,10 @@ export default {
         }
     },
     methods: {
-        search() {
-
-            let url = store.base_api_url + store.fotos_endpoint + '?';
+        controlInput(url) {
 
             if (this.searchInEvidenza) {
-                url = url + 'in_evidenza=1';
+                url = url + '&in_evidenza=1';
 
             };
 
@@ -35,10 +33,17 @@ export default {
 
             };
 
+            return url;
+        },
+        search() {
+
+            let url = store.base_api_url + store.fotos_endpoint + '?';
+            url = this.controlInput(url);
+            //console.log(url);
             if (url != this.searchUrl) {
 
                 //console.log(url);
-                store.CallApiFotos(url);
+                store.callApiFotos(url);
 
                 this.searchUrl = url;
             }
@@ -53,7 +58,12 @@ export default {
             this.searchUrl = '';
             this.reset();
             const url = store.base_api_url + store.fotos_endpoint;
-            store.CallApiFotos(url);
+            store.callApiFotos(url);
+        },
+        goTo(url) {
+            url = this.controlInput(url);
+            console.log(url);
+            store.callApiFotos(url);
         }
 
     }
@@ -125,8 +135,9 @@ export default {
                 </div>
             </div>
         </div>
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" v-if="store.fotos.length > 0">
-            <CardItem v-for="foto, index in store.fotos" :type="''" :index="index" :foto="foto" :key="foto.id"></CardItem>
+        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" v-if="store.fotos.data.length > 0">
+            <CardItem v-for="foto, index in store.fotos.data" :type="''" :index="index" :foto="foto" :key="foto.id">
+            </CardItem>
         </div>
         <div v-else class="py-5">
             <div class="py-5 fs-5 fw-bolder text-center">
@@ -137,6 +148,16 @@ export default {
 
             </div>
         </div>
+        <nav aria-label="Page navigation " class="py-4">
+            <ul class="pagination justify-content-end">
+                <li v-for="link in store.fotos.links    " class="page-item"
+                    :class="!(link.url) ? 'disabled' : '', link.active ? 'active' : ''">
+                    <button class="page-link" :href="link.url" type="button" @click="goTo(link.url)">
+                        <span v-html="link.label"></span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 

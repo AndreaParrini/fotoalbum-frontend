@@ -19,7 +19,7 @@ export const store = reactive({
 
 
     // ACTIONS
-    CallApiFotos(url) {
+    callApiFotos(url) {
         this.loader = true;
         axios
             .get(url)
@@ -38,7 +38,7 @@ export const store = reactive({
         if (!this.fotos) {
             const url = this.base_api_url + this.fotos_endpoint;
 
-            this.CallApiFotos(url);
+            this.callApiFotos(url);
 
             clearInterval(store.sliderInterval);
         }
