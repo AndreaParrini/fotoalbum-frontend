@@ -13,11 +13,12 @@ export default {
             searchInEvidenza: false,
             searchCategory: false,
             searchTitle: '',
-            searchUrl: ''
+            searchUrl: '',
         }
     },
     methods: {
         search() {
+
             let url = store.base_api_url + store.fotos_endpoint + '?';
 
             if (this.searchInEvidenza) {
@@ -35,8 +36,10 @@ export default {
             };
 
             if (url != this.searchUrl) {
+
                 //console.log(url);
                 store.CallApiFotos(url);
+
                 this.searchUrl = url;
             }
 
@@ -104,11 +107,19 @@ export default {
 
 
                         <button class="btn btn-outline-success me-3" type="button" @click="search()"
-                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">Search</button>
-                        <button class="btn btn-outline-danger me-3" type="button" @click="reset()"
-                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">Reset</button>
-                        <button class="btn btn-outline-dark" type="button" @click="annullaFiltri()"
-                            :class="(searchUrl == '') ? 'disabled' : ''">Annulla Filtro</button>
+                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">
+                            <span v-if="!store.loader">Search</span>
+                            <span class="spinner-grow spinner-grow-sm" aria-hidden="true" v-if="store.loader"></span>
+                            <span role="status" v-if="store.loader">Loading...</span>
+                        </button>
+                        <button class="btn btn-outline-danger me-3" type="button" @click="reset()" v-if="!store.loader"
+                            :class="(!searchCategory && !searchInEvidenza && searchTitle == '') ? 'disabled' : ''">
+                            <span>Reset</span>
+                        </button>
+                        <button class="btn btn-outline-dark" type="button" @click="annullaFiltri()" v-if="!store.loader"
+                            :class="(searchUrl == '') ? 'disabled' : ''">
+                            <span>Annulla Filtro</span>
+                        </button>
 
                     </div>
                 </div>

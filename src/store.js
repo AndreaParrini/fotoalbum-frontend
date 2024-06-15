@@ -14,16 +14,20 @@ export const store = reactive({
     activeImage: 0,
     moment: moment,
     allCategories: [],
+    loader: false,
 
 
 
     // ACTIONS
     CallApiFotos(url) {
+        this.loader = true;
         axios
             .get(url)
             .then((response) => {
                 //console.log(response.data.results);
                 this.fotos = response.data.results;
+                this.loader = false;
+
             })
             .catch((error) => {
                 console.error(error);
@@ -40,11 +44,15 @@ export const store = reactive({
         }
     },
     GetFotoHomePage() {
+        this.loader = true;
+
         axios
             .get(this.base_api_url + this.fotos_endpoint + '?' + this.in_evidenza_query)
             .then((response) => {
-                console.log(response.data.results);
+                //console.log(response.data.results);
                 this.fotos_in_evidenza = response.data.results;
+                this.loader = false;
+
             })
             .catch((error) => {
                 console.error(error);
@@ -54,8 +62,8 @@ export const store = reactive({
         axios
             .get(this.base_api_url + this.categories_endpoint)
             .then((response) => {
-                console.log(response.data.results)
-                store.allCategories = response.data.results;
+                //console.log(response.data.results)
+                this.allCategories = response.data.results;
             })
             .catch((error) => {
                 console.error(error)
