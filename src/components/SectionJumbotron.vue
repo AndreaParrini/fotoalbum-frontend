@@ -11,7 +11,7 @@ export default {
 }
 </script>
 <template>
-    <div class="jumbotron p-5 text-light">
+    <div class="jumbotron p-5 text-light" id="about_me">
         <div class=" container py-5">
             <h1 class="fs-1 fw-bold">FotoAlbum by Andrea Parrini</h1>
             <p class="col-md-8 fs-5">
