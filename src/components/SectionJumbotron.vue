@@ -37,7 +37,9 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-attachment: scroll;
     border-bottom: 3px solid black;
     box-shadow: 0 5px 5px black;
+    min-height: 60vh;
 }
 </style>

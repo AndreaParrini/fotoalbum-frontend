@@ -85,7 +85,7 @@ export default {
                         <img height="500" class="card-img-top rounded-3 w-100"
                             :src="foto.image_path.startsWith('https://') ? foto.image_path : store.base_api_url + 'storage/' + foto.image_path"
                             alt="Title" />
-                        <div class="accordion" :data-bs-parent="`#accordion-fotoID-${foto.id}`">
+                        <div class="accordion mt-3" :data-bs-parent="`#accordion-fotoID-${foto.id}`">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -122,7 +122,6 @@ export default {
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
