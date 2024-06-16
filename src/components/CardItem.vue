@@ -46,15 +46,16 @@ export default {
 
 
                     </div>
-                    <div class="position-absolute start-0 bottom-0 ps-3 py-2 d-flex align-items-center gap-2">
-                        <div>
+                    <div class="position-absolute start-0 bottom-0 ps-3 py-2 ">
+                        <div class="bg-light rounded-3 d-flex align-items-center gap-2 px-2 py-1">
                             <i class="fa fa-user-circle fa-2xl" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <span class="fs-6 text-uppercase fw-bold">{{
-                                    foto.title }}</span>
-                            <p class="fs-6 fst-italic m-0">Pubblicata il {{
-                                    store.moment(foto.created_at).format('DD-MM-YYYY') }}</p>
+
+                            <div>
+                                <span class="fs-6 text-uppercase fw-bold">{{
+                                        foto.title }}</span>
+                                <p class="fs-6 fst-italic m-0">Pubblicata il {{
+                                        store.moment(foto.created_at).format('DD-MM-YYYY') }}</p>
+                            </div>
                         </div>
                     </div>
 

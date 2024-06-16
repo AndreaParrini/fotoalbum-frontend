@@ -32,7 +32,7 @@ export default {
     <div class="carosello" v-if="!store.loader">
         <div class="container-fluid px-4">
             <h2 class="text-center fst-italic mb-4">Foto in Evidenza</h2>
-            <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1">
+            <div class="row row-cols-xl-4 row-cols-sm-2 row-cols-1">
                 <CardItem v-for="foto, index in store.fotos_in_evidenza" :type="'slider'" :index="index" :foto="foto"
                     :key="foto.id"></CardItem>
             </div>

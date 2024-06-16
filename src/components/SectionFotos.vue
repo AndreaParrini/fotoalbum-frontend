@@ -26,7 +26,7 @@ export default {
             <h2 class="text-center fst-italic mb-4">Tutte le foto caricate</h2>
             <SectionFilter></SectionFilter>
         </div>
-        <div class="row row-cols-lg-4 row-cols-sm-2 row-cols-1" v-if="store.fotos.data.length > 0">
+        <div class="row row-cols-xl-4  row-cols-lg-3 row-cols-sm-2 row-cols-1" v-if="store.fotos.data.length > 0">
             <CardItem v-for="foto, index in store.fotos.data" :type="''" :index="index" :foto="foto" :key="foto.id">
             </CardItem>
         </div>
