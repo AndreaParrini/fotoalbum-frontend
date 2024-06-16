@@ -1,7 +1,6 @@
 <script>
 export default {
     name: 'SectionFooter',
-
 }
 </script>
 <template>
@@ -11,8 +10,8 @@ export default {
                 <div class="d-flex gap-5">
                     <ul>
                         <h5 class="text-uppercase fw-bold">Links</h5>
-                        <li><a href="#">About Me</a></li>
-                        <li><a href="#">Images</a></li>
+                        <li><a href="#about_me">About Me</a></li>
+                        <li><a href="#section_fotos">Fotos</a></li>
                         <li><a href="#">Album</a></li>
                     </ul>
                     <ul>
@@ -23,7 +22,6 @@ export default {
                         <li><a href="#">Subscriptions</a></li>
                         <li><a href="#">Ratings</a></li>
                         <li><a href="#">Cookie</a></li>
-                        <li><a href="#">Contact Us <i class="fa-regular fa-envelope" style="color: #ffffff;"></i></a></li>
                     </ul>
                 </div>
                 <div class="d-flex gap-5 justify-content-end align-items-end">
@@ -32,11 +30,6 @@ export default {
                         <a href="#"><i class="fa-brands fa-instagram fa-2xl" style="color: #ffffff;"></i></a>
                         <a href="#"><i class="fa-brands fa-youtube fa-2xl" style="color: #ffffff;"></i></a>
                         <a href="#"><i class="fa-brands fa-twitter fa-2xl" style="color: #ffffff;"></i></a>
-
-
-
-
-
                     </div>
                     <div class="logo w-25">
                         <img class="w-100" src="/icon.jpeg" alt="" srcset="">
@@ -54,9 +47,13 @@ li {
 
     & a {
         text-decoration: none;
-        color: var(--dc-gray);
+        color: gray;
         font-size: small;
         font-weight: 200;
+
+        &:hover {
+            color: white;
+        }
     }
 }
 </style>
